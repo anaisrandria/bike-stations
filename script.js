@@ -21,6 +21,7 @@ async function fetchApi() {
 
     for (station in data) {
         displayResults(data[station]);
+        setMarkersOnStations(data[station]);
     }
 } 
 fetchApi();

@@ -13,9 +13,6 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 		'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
-// SET MARKERS //
-var marker = L.marker([adaCoordinates.lat, adaCoordinates.lng]).addTo(map);
-
 // SET CIRCLE //
 var circle = L.circle([adaCoordinates.lat, adaCoordinates.lng], {
 	color: "red",
@@ -24,5 +21,20 @@ var circle = L.circle([adaCoordinates.lat, adaCoordinates.lng], {
 	radius: 30,
 }).addTo(map);
 
+var popup = L.popup()
+	.setLatLng([adaCoordinates.lat, adaCoordinates.lng])
+	.setContent("Vous êtes à Ada Tech School.")
+	.openOn(map);
 
-marker.bindPopup("Ada Tech School").openPopup();
+
+// SET MARKERS FOR BIKE STATIONS //
+// function setMarkersOnStations(lat, lng) {
+	var marker = L.marker([adaCoordinates.lat, adaCoordinates.lng]).addTo(map);
+// }
+// setMarkersOnStations();
+
+// POP UP DESCRIPTION ON MARKER //
+function setMarkersOnStations(station) {
+	var marker = L.marker([station.position.lat, station.position.lng]).addTo(map);
+	marker.bindPopup(`${station.available_bikes} vélos`).openPopup();
+}
