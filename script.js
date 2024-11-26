@@ -1,11 +1,6 @@
 // MANIPULATION DU DOM //
 const cardsContainer = document.querySelector("#cards-container");
 
-// COORDONNÉES ADA TECH SCHOOL NANTES // 
-const adaCoordinates = {
-    "lat" : 47.21987236142364, 
-    "lng" : -1.5334652313567714
-};
 
 // CONNEXION À L'API & RÉCUPÉRATION DES DONNÉES // 
 const apiKey = "e3f5b0642963ce590eb229aaedf81ce9299bd96c";
@@ -27,7 +22,6 @@ async function fetchApi() {
     for (station in data) {
         displayResults(data[station]);
     }
-
 } 
 fetchApi();
 
