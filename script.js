@@ -1,35 +1,35 @@
 // MANIPULATION DU DOM //
 const cardsContainer = document.querySelector("#cards-container");
 
-
-// CONNEXION À L'API & RÉCUPÉRATION DES DONNÉES // 
-const apiKey = "e3f5b0642963ce590eb229aaedf81ce9299bd96c";
+// CONNEXION À L'API & RÉCUPÉRATION DES DONNÉES //
 const contractName = "nantes";
 
 async function fetchApi() {
-    const requestString = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}&position=`;
-    const res = await fetch(requestString);
-    const data = await res.json();
+	const requestString = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}&position=`;
+	const res = await fetch(requestString);
+	const data = await res.json();
 
-    for (station in data) {
-        const distance = calculateDistance(data[station].position.lat, data[station].position.lng);
-        data[station].distance = distance; // Attaching returned distance from function to array elements
-        console.log("🍐", data[station]);
-    }
+	for (station in data) {
+		const distance = calculateDistance(
+			data[station].position.lat,
+			data[station].position.lng
+		);
+		data[station].distance = distance; // Attaching returned distance from function to array elements
+		console.log("🍐", data[station]);
+	}
 
-    data.sort((a, b) => a.distance - b.distance);
+	data.sort((a, b) => a.distance - b.distance);
 
-    for (station in data) {
-        displayResults(data[station]);
-        setMarkersOnStations(data[station]);
-    }
-} 
+	for (station in data) {
+		displayResults(data[station]);
+		setMarkersOnStations(data[station]);
+	}
+}
 fetchApi();
 
-
-// CALCUL DE LA DISTANCE // 
+// CALCUL DE LA DISTANCE //
 function calculateDistance(lat, lng) {
-	const R = 6371; // Radius of the earth in km 
+	const R = 6371; // Radius of the earth in km
 	const dLat = deg2rad(lat - adaCoordinates.lat); // deg2rad below
 	const dLng = deg2rad(lng - adaCoordinates.lng);
 	const a =
@@ -47,15 +47,14 @@ function deg2rad(deg) {
 	return deg * (Math.PI / 180);
 }
 
-
-// AFFICHAGE DES RÉSULTATS // 
+// AFFICHAGE DES RÉSULTATS //
 function displayResults(station) {
-    const bikeStation = document.createElement("div");
-    bikeStation.classList.add("station-card");
-    bikeStation.setAttribute("id", station.number);
+	const bikeStation = document.createElement("div");
+	bikeStation.classList.add("station-card");
+	bikeStation.setAttribute("id", station.number);
 
-    const stationInfos = document.createElement("div");
-    stationInfos.innerHTML = `
+	const stationInfos = document.createElement("div");
+	stationInfos.innerHTML = `
         <strong>#${station.number} ${station.name.slice(4)}</strong><br>
         ${station.address} <br>
         Vélos disponibles : ${station.available_bikes} <br>
@@ -63,6 +62,6 @@ function displayResults(station) {
         <br>
     `;
 
-    bikeStation.appendChild(stationInfos);
-    cardsContainer.appendChild(bikeStation);
+	bikeStation.appendChild(stationInfos);
+	cardsContainer.appendChild(bikeStation);
 }
