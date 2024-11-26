@@ -24,18 +24,21 @@ async function fetchApi() {
     const data = await res.json();
 
     for (station in data) {
-        const distance = calculateDistance(data[station].position.lat, data[station].position.lng)
-        data[station].distance = distance;
+        const distance = calculateDistance(data[station].position.lat, data[station].position.lng);
+        data[station].distance = distance; // Attaching returned distance from function to array elements
         console.log("🍐", data[station]);
+    }
+
+    for (station in data) {
+        data.sort((a, b) => a.distance - b.distance);
         displayResults(data[station]);
     }
+
 } 
 fetchApi();
 
-function calculateDistance(lat, lng) {
-	// const distanceLat = adaCoordinates.lat - lat;
-	// const distanceLng = adaCoordinates.lng - lng;
 
+function calculateDistance(lat, lng) {
 	var R = 6371; // Radius of the earth in km
 	var dLat = deg2rad(lat - adaCoordinates.lat); // deg2rad below
 	var dLng = deg2rad(lng - adaCoordinates.lng);
@@ -65,7 +68,7 @@ function displayResults(station) {
         <strong>#${station.number} ${station.name.slice(4)}</strong><br>
         ${station.address} <br>
         Vélos disponibles : ${station.available_bikes} <br>
-        Distance (en km) : ${station.distance.toFixed(2)} km
+        Distance : ${station.distance.toFixed(2)} km
         <br>
     `;
 
