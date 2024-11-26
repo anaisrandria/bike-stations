@@ -1,0 +1,11 @@
+#cards-container {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+}
+
+.station-card {
+    margin: 2rem;
+    padding: 2rem;
+    border: 1px solid black;
+    border-radius: 5px;
+}
