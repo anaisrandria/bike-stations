@@ -5,7 +5,7 @@ const adaCoordinates = {
 
 
 // SET VIEW // 
-var map = L.map("map").setView([adaCoordinates.lat, adaCoordinates.lng], 18);
+var map = L.map("map").setView([adaCoordinates.lat, adaCoordinates.lng], 14);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 	maxZoom: 19,
@@ -18,23 +18,20 @@ var circle = L.circle([adaCoordinates.lat, adaCoordinates.lng], {
 	color: "red",
 	fillColor: "#f03",
 	fillOpacity: 0.5,
-	radius: 30,
+	radius: 500,
 }).addTo(map);
 
+// STAND-ALONE POPUP //
 var popup = L.popup()
 	.setLatLng([adaCoordinates.lat, adaCoordinates.lng])
-	.setContent("Vous êtes à Ada Tech School.")
+	.setContent("📍 Ada Tech School")
 	.openOn(map);
 
-
-// SET MARKERS FOR BIKE STATIONS //
-// function setMarkersOnStations(lat, lng) {
-	var marker = L.marker([adaCoordinates.lat, adaCoordinates.lng]).addTo(map);
-// }
-// setMarkersOnStations();
-
-// POP UP DESCRIPTION ON MARKER //
+// POP-UP DESCRIPTION ON MARKER //
 function setMarkersOnStations(station) {
 	var marker = L.marker([station.position.lat, station.position.lng]).addTo(map);
-	marker.bindPopup(`${station.available_bikes} vélos`).openPopup();
+	marker.bindPopup(`
+		<strong>${station.name.slice(4)}</strong><br>
+		Vélos disponibles : ${station.available_bikes} 🚲 
+	`);
 }

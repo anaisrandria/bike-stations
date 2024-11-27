@@ -5,7 +5,7 @@ const cardsContainer = document.querySelector("#cards-container");
 const contractName = "nantes";
 
 async function fetchApi() {
-	const requestString = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}&position=`;
+	const requestString = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
 	const res = await fetch(requestString);
 	const data = await res.json();
 
@@ -16,13 +16,15 @@ async function fetchApi() {
 		);
 		data[station].distance = distance; // Attaching returned distance from function to array elements
 		console.log("🍐", data[station]);
+		if (data[station].distance <= 1) {
+			setMarkersOnStations(data[station]);
+		}
 	}
-
+	
 	data.sort((a, b) => a.distance - b.distance);
-
+	
 	for (station in data) {
 		displayResults(data[station]);
-		setMarkersOnStations(data[station]);
 	}
 }
 fetchApi();
@@ -49,19 +51,16 @@ function deg2rad(deg) {
 
 // AFFICHAGE DES RÉSULTATS //
 function displayResults(station) {
-	const bikeStation = document.createElement("div");
-	bikeStation.classList.add("station-card");
-	bikeStation.setAttribute("id", station.number);
+	const stationCard = document.createElement("button");
+	stationCard.classList.add("station-card");
+	stationCard.setAttribute("id", station.number);
 
-	const stationInfos = document.createElement("div");
-	stationInfos.innerHTML = `
-        <strong>#${station.number} ${station.name.slice(4)}</strong><br>
+	stationCard.innerHTML = `
+        <strong>${station.name.slice(4)}</strong><br>
         ${station.address} <br>
-        Vélos disponibles : ${station.available_bikes} <br>
-        Distance : ${station.distance.toFixed(2)} km
-        <br>
+        Vélos disponibles : ${station.available_bikes} <br><br>
+        📍 ${station.distance.toFixed(2).replace(".", ",")} km
     `;
 
-	bikeStation.appendChild(stationInfos);
-	cardsContainer.appendChild(bikeStation);
+	cardsContainer.appendChild(stationCard);
 }
