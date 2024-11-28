@@ -28,7 +28,7 @@ var popup = L.popup()
 	.openOn(map);
 
 // POP-UP DESCRIPTION ON MARKER //
-function setMarkersOnStations(station) {
+const setMarkersOnStations = (station) => {
 	var marker = L.marker([station.position.lat, station.position.lng]).addTo(map);
 	marker.bindPopup(`
 		<strong>${station.name.slice(4)}</strong><br>

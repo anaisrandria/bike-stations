@@ -55,6 +55,8 @@ function displayResults(station) {
 	const stationCard= document.createElement("button");
 	stationCard.classList.add("station-card");
 	stationCard.setAttribute("id", station.number);
+	// définir un attribut sur le nom
+	// danas la boucle : regarder if attribute name not includes (input)
 	
 	stationCard.innerHTML = `
         <strong>${station.name.slice(4)}</strong><br>
@@ -80,8 +82,10 @@ function filterByName() {
 	const input = searchBar.value;
 	console.log(input);
 	const filteredData = data.filter((station) => {
-		station.name.toLowerCase().includes(input.toLowerCase());
 		console.log("🔴", input.toLowerCase());
+		const stationName = station.name.toLowerCase();
+		const userIput = input.toLowerCase();
+		return stationName.includes(userIput);
 	});
 	console.log("🟢", filteredData);
 }
