@@ -1,13 +1,16 @@
 // MANIPULATION DU DOM //
 const cardsContainer = document.querySelector("#cards-container");
+const searchBar = document.querySelector("#search-bar");
 
 // CONNEXION À L'API & RÉCUPÉRATION DES DONNÉES //
 const contractName = "nantes";
 
+let data;
+
 async function fetchApi() {
 	const requestString = `https://api.jcdecaux.com/vls/v1/stations?contract=${contractName}&apiKey=${apiKey}`;
 	const res = await fetch(requestString);
-	const data = await res.json();
+	data = await res.json();
 
 	for (station in data) {
 		const distance = calculateDistance(
@@ -16,9 +19,7 @@ async function fetchApi() {
 		);
 		data[station].distance = distance; // Attaching returned distance from function to array elements
 		console.log("🍐", data[station]);
-		if (data[station].distance <= 1) {
 			setMarkersOnStations(data[station]);
-		}
 	}
 	
 	data.sort((a, b) => a.distance - b.distance);
@@ -51,10 +52,10 @@ function deg2rad(deg) {
 
 // AFFICHAGE DES RÉSULTATS //
 function displayResults(station) {
-	const stationCard = document.createElement("button");
+	const stationCard= document.createElement("button");
 	stationCard.classList.add("station-card");
 	stationCard.setAttribute("id", station.number);
-
+	
 	stationCard.innerHTML = `
         <strong>${station.name.slice(4)}</strong><br>
         ${station.address} <br>
@@ -63,4 +64,25 @@ function displayResults(station) {
     `;
 
 	cardsContainer.appendChild(stationCard);
+	stationCard.addEventListener("click", flyToMarker = () => {
+		console.log("🥑", station)
+		map.flyTo(([station.position.lat, station.position.lng]), 17);
+	});
 }
+
+// SET VIEW ON SPECIFIC STATION // 
+// function flyToMarker() {
+	
+// }
+
+// FILTRE PAR NOM DANS LA BARRE DE RECHERCHE //
+function filterByName() {
+	const input = searchBar.value;
+	console.log(input);
+	const filteredData = data.filter((station) => {
+		station.name.toLowerCase().includes(input.toLowerCase());
+		console.log("🔴", input.toLowerCase());
+	});
+	console.log("🟢", filteredData);
+}
+searchBar.addEventListener("input", filterByName);
