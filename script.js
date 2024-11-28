@@ -19,11 +19,11 @@ async function fetchApi() {
 		);
 		data[station].distance = distance; // Attaching returned distance from function to array elements
 		console.log("🍐", data[station]);
-			setMarkersOnStations(data[station]);
+		setMarkersOnStations(data[station]);
 	}
 	
 	data.sort((a, b) => a.distance - b.distance);
-	
+
 	for (station in data) {
 		displayResults(data[station]);
 	}
@@ -55,8 +55,6 @@ function displayResults(station) {
 	const stationCard= document.createElement("button");
 	stationCard.classList.add("station-card");
 	stationCard.setAttribute("id", station.number);
-	// définir un attribut sur le nom
-	// danas la boucle : regarder if attribute name not includes (input)
 	
 	stationCard.innerHTML = `
         <strong>${station.name.slice(4)}</strong><br>
@@ -72,21 +70,27 @@ function displayResults(station) {
 	});
 }
 
-// SET VIEW ON SPECIFIC STATION // 
-// function flyToMarker() {
-	
-// }
-
 // FILTRE PAR NOM DANS LA BARRE DE RECHERCHE //
 function filterByName() {
 	const input = searchBar.value;
 	console.log(input);
 	const filteredData = data.filter((station) => {
-		console.log("🔴", input.toLowerCase());
 		const stationName = station.name.toLowerCase();
 		const userIput = input.toLowerCase();
 		return stationName.includes(userIput);
 	});
 	console.log("🟢", filteredData);
+	return filteredData;
 }
-searchBar.addEventListener("input", filterByName);
+
+searchBar.addEventListener("input", () => {
+	if (searchBar.value) {
+		cardsContainer.innerHTML = "";
+	};
+
+	const filteredData = filterByName();
+	for (station in filteredData) {
+		displayResults(filteredData[station]);
+		};
+	}
+);
