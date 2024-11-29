@@ -2,7 +2,6 @@
 
 * {
     margin: 5px 0px 5px 0px;
-    /* padding: 0; */
     box-sizing: border-box;
     text-decoration: none;
     color: #333;
@@ -47,7 +46,3 @@ input {
     margin: 0.8em;
     padding: 0.8rem;
 }
-
-/* button:hover {
-    background-color: #212121;
-} */

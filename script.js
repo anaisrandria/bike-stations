@@ -15,7 +15,7 @@ async function fetchApi() {
 	for (station in data) {
 		const distance = calculateDistance(
 			data[station].position.lat,
-			data[station].position.lng
+			data[station].position.lng,
 		);
 		data[station].distance = distance; // Attaching returned distance from function to array elements
 		console.log("🍐", data[station]);

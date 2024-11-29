@@ -3,7 +3,6 @@ const adaCoordinates = {
 	lng: -1.5334652313567714,
 };
 
-
 // SET VIEW // 
 var map = L.map("map").setView([adaCoordinates.lat, adaCoordinates.lng], 14);
 
@@ -32,6 +31,6 @@ const setMarkersOnStations = (station) => {
 	var marker = L.marker([station.position.lat, station.position.lng]).addTo(map);
 	marker.bindPopup(`
 		<strong>${station.name.slice(4)}</strong><br>
-		Vélos disponibles : ${station.available_bikes} 🚲 
+		Vélos disponibles : ${station.available_bikes}
 	`);
 }
