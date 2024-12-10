@@ -7,7 +7,7 @@ Application web permettant d'afficher le nombre de vélos disponibles sur les st
 ## Caractéristiques :
 - État du projet : Terminé / Prototype
   
-- Exercice réalisé 3 heures dans le cadre d'une simulation d'entretien technique.
+- Exercice réalisé en 3 heures dans le cadre d'une simulation d'entretien technique.
   
 - Technologies utilisées :
   - Langages : JavaScript, HTML, CSS
